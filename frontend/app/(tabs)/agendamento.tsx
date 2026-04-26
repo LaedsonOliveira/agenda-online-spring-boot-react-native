@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Modal, Alert } from 'react-native';
 import { useState } from 'react';
 import { router } from 'expo-router';
 
@@ -7,6 +7,8 @@ export default function AgendamentoScreen() {
     const [selectedTime, setSelectedTime] = useState('');
     const [selectedCuts, setSelectedCuts] = useState<string[]>([]);
     const [selectedBarber, setSelectedBarber] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [agendando, setAgendando] = useState(false);
 
     // Dados de exemplo
     const days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
@@ -23,6 +25,17 @@ export default function AgendamentoScreen() {
         { id: '2', nome: 'Marcos Santos' },
         { id: '3', nome: 'Carlos Oliveira' },
     ];
+
+    // FUNÇÃO PARA FORMATAR DATA - MOVIDA PARA FORA
+    const formatarData = (dia: string) => {
+        const meses = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+        const dataAtual = new Date();
+        const mesAtual = dataAtual.getMonth();
+        return `${dia} de ${meses[mesAtual]}`;
+    };
 
     const toggleCut = (cutName: string) => {
         if (selectedCuts.includes(cutName)) {
@@ -41,23 +54,58 @@ export default function AgendamentoScreen() {
         return total;
     };
 
+    // Função que abre o popup
     const handleAgendar = () => {
         if (!selectedDate || !selectedTime || selectedCuts.length === 0 || !selectedBarber) {
             alert('Por favor, preencha todos os campos');
             return;
         }
 
-        console.log('Agendamento:', {
-            estabelecimento: 'Barbearia JoãoMello',
-            data: selectedDate,
-            hora: selectedTime,
-            servicos: selectedCuts,
-            barbeiro: selectedBarber,
-            total: calcularTotal()
-        });
+        // Abrir o popup de confirmação
+        setModalVisible(true);
+    };
 
-        alert('Agendamento realizado com sucesso!');
-        // router.push('/confirmacao'); // Navegar para tela de confirmação
+    // Função que finaliza o agendamento
+    const confirmarAgendamento = async () => {
+        setAgendando(true);
+        setModalVisible(false);
+
+        const total = calcularTotal();
+
+        try {
+            console.log('✅ AGENDAMENTO CONFIRMADO!');
+            console.log('Dados:', {
+                data: selectedDate,
+                horario: selectedTime,
+                servicos: selectedCuts,
+                barbeiro: selectedBarber,
+                total: `R$ ${total},00`
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            Alert.alert(
+                '✅ Agendamento Confirmado!',
+                `Seu horário foi reservado com sucesso!\n\n📅 Data: ${formatarData(selectedDate)}\n⏰ Horário: ${selectedTime}\n💈 Barbeiro: ${selectedBarber}\n💰 Total: R$ ${total},00`,
+                [
+                    {
+                        text: 'OK',
+                        onPress: () => {
+                            // Limpar os campos
+                            setSelectedDate('');
+                            setSelectedTime('');
+                            setSelectedCuts([]);
+                            setSelectedBarber('');
+                        }
+                    }
+                ]
+            );
+
+        } catch (error) {
+            Alert.alert('Erro', 'Não foi possível realizar o agendamento.');
+        } finally {
+            setAgendando(false);
+        }
     };
 
     return (
@@ -172,6 +220,51 @@ export default function AgendamentoScreen() {
             <TouchableOpacity style={styles.button} onPress={handleAgendar}>
                 <Text style={styles.buttonText}>AGENDAR</Text>
             </TouchableOpacity>
+
+            {/* MODAL POPUP DE CONFIRMAÇÃO */}
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContainer}>
+                        <Text style={styles.modalTitle}>📋 Confirmar Agendamento</Text>
+
+                        <View style={styles.modalContent}>
+                            <Text style={styles.modalText}>Você confirma os dados do agendamento?</Text>
+
+                            <View style={styles.modalResumo}>
+                                <Text style={styles.modalResumoText}>📅 Data: {formatarData(selectedDate)}</Text>
+                                <Text style={styles.modalResumoText}>⏰ Horário: {selectedTime}</Text>
+                                <Text style={styles.modalResumoText}>✂️ Serviços: {selectedCuts.join(', ')}</Text>
+                                <Text style={styles.modalResumoText}>💈 Barbeiro: {selectedBarber}</Text>
+                                <Text style={styles.modalTotalText}>💰 Total: R$ {calcularTotal()},00</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity
+                                style={styles.modalCancelButton}
+                                onPress={() => setModalVisible(false)}
+                            >
+                                <Text style={styles.modalCancelText}>Cancelar</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.modalConfirmButton}
+                                onPress={confirmarAgendamento}
+                                disabled={agendando}
+                            >
+                                <Text style={styles.modalConfirmText}>
+                                    {agendando ? 'Processando...' : 'Confirmar'}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </ScrollView>
     );
 }
@@ -205,14 +298,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
         color: '#333',
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 8,
-        padding: 12,
-        fontSize: 16,
-        backgroundColor: '#f9f9f9',
     },
     datesContainer: {
         flexDirection: 'row',
@@ -351,5 +436,89 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#333',
         marginBottom: 10,
+    },
+    // Estilos do Modal
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContainer: {
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 20,
+        width: '85%',
+        maxWidth: 400,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 15,
+        color: '#333',
+    },
+    modalContent: {
+        marginBottom: 20,
+    },
+    modalText: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 15,
+        color: '#666',
+    },
+    modalResumo: {
+        backgroundColor: '#f9f9f9',
+        padding: 15,
+        borderRadius: 10,
+        marginTop: 10,
+    },
+    modalResumoText: {
+        fontSize: 14,
+        color: '#555',
+        marginBottom: 5,
+    },
+    modalTotalText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#007AFF',
+        marginTop: 8,
+        paddingTop: 8,
+        borderTopWidth: 1,
+        borderTopColor: '#ddd',
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 10,
+    },
+    modalCancelButton: {
+        flex: 1,
+        backgroundColor: '#ccc',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    modalCancelText: {
+        color: '#333',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    modalConfirmButton: {
+        flex: 1,
+        backgroundColor: '#28a745',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    modalConfirmText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
