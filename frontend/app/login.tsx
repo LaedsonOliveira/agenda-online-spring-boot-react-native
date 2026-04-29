@@ -15,7 +15,7 @@ export default function Login() {
         // TODO: integrar backend real de autenticação
         console.log("Email:", email);
         console.log("Senha:", password);
-        router.replace("/home" as any);
+        router.replace("/(tabs)/agendamento" as any);
     }
 
     return (
