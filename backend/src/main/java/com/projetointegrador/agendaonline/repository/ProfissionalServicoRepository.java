@@ -8,8 +8,15 @@ import java.util.UUID;
 
 public interface ProfissionalServicoRepository extends JpaRepository<ProfissionalServico, UUID> {
 
-//    List<ProfissionalServico> findByEstabelecimento_Id(UUID estabelecimentoId);
+    List<ProfissionalServico> findByProfissional_Id(UUID profissionalId);
 
-    // List<ProfissionalServico> findByWhatsappAndEstabelecimento_Id(String
-    // whatsapp, UUID estabelecimentoId);
+    List<ProfissionalServico> findByServico_Id(UUID servicoId);
+
+    List<ProfissionalServico> findByProfissional_Estabelecimento_Id(UUID estabelecimentoId);
+
+    List<ProfissionalServico> findByServico_Estabelecimento_Id(UUID estabelecimentoId);
+
+    List<ProfissionalServico> findByProfissional_Estabelecimento_WhatsappAndProfissional_Estabelecimento_Id(
+            String whatsapp,
+            UUID estabelecimentoId);
 }

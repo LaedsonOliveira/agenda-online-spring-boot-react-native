@@ -39,4 +39,12 @@ public class Cliente {
 
     @CreationTimestamp
     private OffsetDateTime criadoEm;
+
+    public Estabelecimento getEstabelecimento() {
+        return estabelecimento;
+    }
+
+    public void setEstabelecimento(Estabelecimento estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
 }

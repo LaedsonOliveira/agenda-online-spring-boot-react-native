@@ -27,4 +27,12 @@ public class Profissional {
     private String fotoUrl;
 
     private Boolean ativo = true;
+
+    public Estabelecimento getEstabelecimento() {
+        return estabelecimento;
+    }
+
+    public void setEstabelecimento(Estabelecimento estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
 }

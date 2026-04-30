@@ -35,4 +35,12 @@ public class Servico {
     private String categoria;
 
     private Boolean ativo = true;
+
+    public Estabelecimento getEstabelecimento() {
+        return estabelecimento;
+    }
+
+    public void setEstabelecimento(Estabelecimento estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
 }
