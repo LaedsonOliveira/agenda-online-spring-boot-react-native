@@ -1,3 +1,5 @@
+import '../gesture-handler'
+
 import { Link } from "expo-router";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 

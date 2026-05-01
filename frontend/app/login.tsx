@@ -1,129 +1,170 @@
-import { useState } from "react";
-import { Text, TextInput, View, StyleSheet, Pressable } from "react-native";
-import { useRouter, Link } from "expo-router";
+import React, { useState } from "react";
+import Logo from '@/assets/logo.png'
+import { Input } from "@/components/Input";
+import { Button } from "@/components/Button";
+import { Text, View, Image, Alert } from 'react-native'
+import { useRouter } from 'expo-router';
+import { MaterialIcons, Octicons } from '@expo/vector-icons';
+import { themas } from "@/app/global/themes"
+import { StyleSheet, Dimensions } from "react-native";
 
 export default function Login() {
     const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
-    function handleLogin() {
+    const [email, setEmail] = useState('exemplo@gmail.com');
+    const [password, setPassword] = useState('12345');
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+
+    const BACKEND_API_URL = 'http://localhost:8080/api';
+
+    async function getLogin() {
         if (!email || !password) {
-            alert("Informe email e senha para entrar.");
-            return;
+            return Alert.alert('Atenção', 'Informe os campos obrigatórios!');
         }
-        // TODO: integrar backend real de autenticação
-        console.log("Email:", email);
-        console.log("Senha:", password);
-        router.replace("/(tabs)/agendamento" as any);
+
+        try {
+            // setLoading(true);
+
+            // const response = await fetch(`${BACKEND_API_URL}/clientes/login`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         email,
+            //         senha: password
+            //     })
+            // });
+
+            // if (!response.ok) {
+            //     const errorBody = await response.json().catch(() => null);
+            //     const message = errorBody?.message || 'E-mail ou senha inválidos!';
+            //     return Alert.alert('Atenção', message);
+            // }
+
+            // const cliente = await response.json();
+            // Alert.alert('Sucesso', `Bem-vindo ${cliente.nome}!`);
+            router.replace('/home');
+        } catch (error) {
+            console.log('Login error', error);
+            Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
+        } finally {
+            setLoading(false);
+        }
     }
+
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Login</Text>
-
-            <Text style={styles.subtitle}>
-                Entre na sua conta para acessar seus agendamentos
-            </Text>
-
-            <TextInput
-                placeholder="Digite seu email"
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-            />
-
-            <TextInput
-                placeholder="Digite sua senha"
-                style={styles.input}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-
-            <Pressable style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Entrar</Text>
-            </Pressable>
-
-            <Pressable onPress={() => router.push("/forgot" as any)} style={styles.linkButton}>
-                <Text style={styles.linkText}>Esqueci minha senha</Text>
-            </Pressable>
-
-            <View style={styles.footerRow}>
-                <Text style={styles.footerText}>Ainda não tem conta?</Text>
-                <Link href={"/register" as any} style={styles.linkText}>Cadastrar</Link>
+            <View style={styles.boxTop}>
+                <Image
+                    source={Logo}
+                    style={styles.logo}
+                    resizeMode="contain"
+                />
+                <Text style={styles.text}>Bem vindo de volta!</Text>
             </View>
+            <View style={styles.boxMid}>
+                <Input
+                    title="ENDEREÇO E-MAIL"
+                    value={email}
+                    onChangeText={setEmail}
+                    IconRigth={MaterialIcons}
+                    iconRightName="email"
+                    onIconRigthPress={() => console.log('OLA')}
+                />
+                <Input
+                    title="SENHA"
+                    value={password}
+                    onChangeText={setPassword}
+                    IconRigth={Octicons}
+                    iconRightName={showPassword ? "eye" : "eye-closed"}
+                    onIconRigthPress={() => setShowPassword(!showPassword)}
+                    secureTextEntry={!showPassword}
+                    multiline={false}
+                />
+            </View>
+            <View style={styles.boxBottom}>
+                <Button text="ENTRAR" loading={loading} onPress={() => getLogin()} />
+                <Text style={styles.textBottom}>Não tem conta? <Text style={styles.textBottomCreate} onPress={() => router.push('/register')}>Crie agora</Text></Text>
+            </View>
+
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
-        justifyContent: "center",
-        padding: 25,
-        backgroundColor: "#f5f5f5",
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-
-    title: {
-        fontSize: 30,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginBottom: 10,
-        color: "#2c3e50",
+    boxTop: {
+        height: Dimensions.get('window').height / 3,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-
-    subtitle: {
-        fontSize: 16,
-        textAlign: "center",
-        marginBottom: 30,
-        color: "#555",
+    boxMid: {
+        height: Dimensions.get('window').height / 4,
+        width: '100%',
+        paddingHorizontal: 37,
     },
+    boxBottom: {
+        height: Dimensions.get('window').height / 3,
+        // backgroundColor:'green',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
 
-    input: {
+    },
+    boxInput: {
+        width: '100%',
+        height: 40,
         borderWidth: 1,
-        borderColor: "#ccc",
-        padding: 14,
-        marginBottom: 15,
-        borderRadius: 8,
-        backgroundColor: "#fff",
-    },
-
-    button: {
-        backgroundColor: "#2c7be5",
-        padding: 15,
-        borderRadius: 8,
-        alignItems: "center",
+        borderRadius: 40,
+        borderColor: themas.Colors.lightGray,
+        backgroundColor: themas.Colors.bgScreen,
         marginTop: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 30
     },
-
-    buttonText: {
-        color: "#fff",
+    logo: {
+        width: 80,
+        height: 80,
+        marginTop: 40
+    },
+    text: {
+        marginTop: 35,
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    input: {
+        // backgroundColor:'red',
+        height: '100%',
+        width: '100%',
+        borderRadius: 40,
+        // paddingHorizontal:20
+    },
+    boxIcon: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'red'
+    },
+    titleInput: {
+        marginLeft: 5,
+        color: themas.Colors.gray,
+        marginTop: 20
+    },
+    textBottom: {
         fontSize: 16,
-        fontWeight: "bold",
+        color: themas.Colors.gray
     },
-
-    linkButton: {
-        marginTop: 12,
-        alignItems: "center",
-    },
-
-    linkText: {
-        color: "#2c7be5",
-        fontSize: 14,
-        textDecorationLine: "underline",
-    },
-
-    footerRow: {
-        marginTop: 20,
-        flexDirection: "row",
-        justifyContent: "center",
-        gap: 8,
-    },
-
-    footerText: {
-        color: "#555",
-        fontSize: 14,
-    },
-});
+    textBottomCreate: {
+        fontSize: 16,
+        color: themas.Colors.primary
+    }
+})

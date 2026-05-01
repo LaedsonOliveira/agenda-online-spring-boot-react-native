@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
+public interface AgendamentoRepository extends JpaRepository<Agendamento, UUID> {
 
     List<Agendamento> findByProfissionalId(UUID profissionalId);
 
@@ -19,6 +19,5 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
     List<Agendamento> findByProfissionalIdAndDataHoraInicioBetween(
             UUID profissionalId,
             OffsetDateTime inicio,
-            OffsetDateTime fim
-    );
+            OffsetDateTime fim);
 }

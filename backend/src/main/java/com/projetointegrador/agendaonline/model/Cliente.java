@@ -29,7 +29,12 @@ public class Cliente {
     @Column(nullable = false)
     private String whatsapp;
 
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String senhaHash;
+
     private LocalDate dataNascimento;
 
     private Integer totalAgendamentos = 0;
@@ -46,5 +51,13 @@ public class Cliente {
 
     public void setEstabelecimento(Estabelecimento estabelecimento) {
         this.estabelecimento = estabelecimento;
+    }
+
+    public String getSenhaHash() {
+        return senhaHash;
+    }
+
+    public void setSenhaHash(String senhaHash) {
+        this.senhaHash = senhaHash;
     }
 }
