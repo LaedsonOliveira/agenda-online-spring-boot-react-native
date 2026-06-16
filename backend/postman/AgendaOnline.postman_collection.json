@@ -1,0 +1,330 @@
+{
+    "info": {
+        "name": "Agenda Online API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": "Coleção com os principais endpoints do backend da Agenda Online para testes com Postman."
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8080/api",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Clientes",
+            "item": [
+                {
+                    "name": "Registrar cliente",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Teste Usuario\",\n  \"email\": \"teste@dominio.com\",\n  \"senha\": \"12345\",\n  \"whatsapp\": \"+5511999999999\",\n  \"estabelecimentoId\": 1,\n  \"dataNascimento\": \"1990-01-01\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/clientes/register",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "clientes",
+                                "register"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Login cliente",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"teste@dominio.com\",\n  \"senha\": \"12345\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/clientes/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "clientes",
+                                "login"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Estabelecimentos",
+            "item": [
+                {
+                    "name": "Listar estabelecimentos",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/estabelecimentos",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "estabelecimentos"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar estabelecimento",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Barbearia Central\",\n  \"endereco\": \"Rua Exemplo, 123\",\n  \"telefone\": \"+551133322211\",\n  \"whatsapp\": \"+5511999999999\",\n  \"email\": \"contato@barbearia.com\",\n  \"tipoNegocio\": \"BARBEARIA\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/estabelecimentos",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "estabelecimentos"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Barbeiros",
+            "item": [
+                {
+                    "name": "Listar barbeiros",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/barbeiros",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "barbeiros"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar barbeiros por estabelecimento",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/barbeiros?estabelecimentoId=1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "barbeiros"
+                            ],
+                            "query": [
+                                {
+                                    "key": "estabelecimentoId",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar barbeiro por id",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/barbeiros/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "barbeiros",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar barbeiro",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"João Barbeiro\",\n  \"email\": \"joao@barbearia.com\",\n  \"senha\": \"senha123\",\n  \"especialidade\": \"Corte masculino\",\n  \"fotoUrl\": \"https://example.com/foto.jpg\",\n  \"estabelecimentoId\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/barbeiros",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "barbeiros"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Serviços",
+            "item": [
+                {
+                    "name": "Listar serviços",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/servicos",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "servicos"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar serviços por estabelecimento",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/servicos?estabelecimentoId=1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "servicos"
+                            ],
+                            "query": [
+                                {
+                                    "key": "estabelecimentoId",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Agendamentos",
+            "item": [
+                {
+                    "name": "Listar agendamentos",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/agendamentos",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "agendamentos"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar agendamentos por cliente",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/agendamentos?clienteId=1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "agendamentos"
+                            ],
+                            "query": [
+                                {
+                                    "key": "clienteId",
+                                    "value": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar agendamento",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"data\": \"2026-06-20\",\n  \"horario\": \"14:00\",\n  \"clienteId\": 1,\n  \"barbeiroId\": 1,\n  \"servicoId\": 1,\n  \"estabelecimentoId\": 1,\n  \"origem\": \"APP\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/agendamentos",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "agendamentos"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Alterar status do agendamento",
+                    "request": {
+                        "method": "PUT",
+                        "url": {
+                            "raw": "{{baseUrl}}/agendamentos/1/status?status=CONFIRMADO",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "agendamentos",
+                                "1",
+                                "status"
+                            ],
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "CONFIRMADO"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,292 @@
+import { StyleSheet } from 'react-native';
+
+export const meusAgendamentosStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#f5f5f5',
+    },
+    centerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f5',
+    },
+    loadingText: {
+        marginTop: 10,
+        color: '#666',
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#e0e0e0',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    filterButton: {
+        padding: 8,
+    },
+    section: {
+        marginTop: 20,
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginLeft: 20,
+        marginBottom: 10,
+        color: '#333',
+    },
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        marginHorizontal: 16,
+        marginBottom: 12,
+        padding: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 12,
+        paddingBottom: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f0f0f0',
+    },
+    dateContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    date: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    time: {
+        fontSize: 14,
+        color: '#666',
+    },
+    todayBadge: {
+        backgroundColor: '#FF9800',
+        paddingHorizontal: 8,
+        paddingVertical: 2,
+        borderRadius: 12,
+    },
+    todayText: {
+        color: '#fff',
+        fontSize: 10,
+        fontWeight: 'bold',
+    },
+    statusBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 12,
+    },
+    statusText: {
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: '500',
+    },
+    cardContent: {
+        gap: 8,
+        marginBottom: 12,
+    },
+    infoRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    services: {
+        fontSize: 14,
+        color: '#333',
+        flex: 1,
+    },
+    barber: {
+        fontSize: 14,
+        color: '#333',
+        flex: 1,
+    },
+    totalRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 8,
+        paddingTop: 8,
+        borderTopWidth: 1,
+        borderTopColor: '#f0f0f0',
+    },
+    totalLabel: {
+        fontSize: 14,
+        color: '#666',
+    },
+    totalValue: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#007AFF',
+    },
+    observacaoContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        gap: 6,
+        marginTop: 8,
+        padding: 8,
+        backgroundColor: '#f8f9fa',
+        borderRadius: 8,
+    },
+    observacao: {
+        fontSize: 12,
+        color: '#666',
+        flex: 1,
+    },
+    cardActions: {
+        flexDirection: 'row',
+        gap: 12,
+        marginTop: 12,
+        paddingTop: 12,
+        borderTopWidth: 1,
+        borderTopColor: '#f0f0f0',
+    },
+    actionButton: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        paddingVertical: 10,
+        borderRadius: 8,
+    },
+    reagendarButton: {
+        backgroundColor: '#E3F2FD',
+    },
+    reagendarText: {
+        color: '#007AFF',
+        fontWeight: '500',
+    },
+    cancelarButton: {
+        backgroundColor: '#FFEBEE',
+    },
+    cancelarText: {
+        color: '#F44336',
+        fontWeight: '500',
+    },
+    avaliarButton: {
+        backgroundColor: '#FFF8E1',
+    },
+    avaliarText: {
+        color: '#FFB800',
+        fontWeight: '500',
+    },
+    emptyContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 40,
+        paddingVertical: 60,
+    },
+    emptyText: {
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#333',
+        marginTop: 20,
+        marginBottom: 8,
+    },
+    emptySubtext: {
+        fontSize: 14,
+        color: '#666',
+        textAlign: 'center',
+        marginBottom: 30,
+    },
+    button: {
+        backgroundColor: '#007AFF',
+        paddingHorizontal: 30,
+        paddingVertical: 12,
+        borderRadius: 25,
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+
+    modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+modalContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    width: '85%',
+    maxHeight: '80%',
+},
+modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: 'center',
+},
+modalContent: {
+    marginBottom: 20,
+},
+modalText: {
+    fontSize: 16,
+    marginBottom: 15,
+    textAlign: 'center',
+},
+modalResumo: {
+    backgroundColor: '#f5f5f5',
+    padding: 15,
+    borderRadius: 8,
+},
+modalResumoText: {
+    fontSize: 14,
+    marginBottom: 5,
+},
+modalTotalText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 5,
+    color: '#007AFF',
+},
+modalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+},
+modalCancelButton: {
+    flex: 1,
+    backgroundColor: '#f0f0f0',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+},
+modalCancelText: {
+    color: '#666',
+    fontWeight: '500',
+},
+modalConfirmButton: {
+    flex: 1,
+    backgroundColor: '#007AFF',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+},
+modalConfirmText: {
+    color: '#fff',
+    fontWeight: '500',
+},
+});
